@@ -8,7 +8,6 @@
 #define TEXT_HEIGHT 6
 #define NUM_LINES (SCREEN_HEIGHT/TEXT_HEIGHT)
 #include "6pt.h" 
-#include "draw6pt.cpp"
 #include "SPI.h"
 
 //Adafruit_PCD8544 display = Adafruit_PCD8544(PB3, PB5, PB0, PB1, PB11);
@@ -81,32 +80,8 @@ void writeText(char* text, unsigned xStart, unsigned xEnd, unsigned y, bool inve
   display.updateBoundingBox(xStart, y, xEnd, y+TEXT_HEIGHT-1);
 }
 
-void writeLine2(char*s , int number, bool invert) {
+void writeLine(char*s , int number, bool invert) {
   writeText(s, 0, SCREEN_WIDTH, number*TEXT_HEIGHT, invert);
-}
-
-void writeLine(char* s, int number, bool invert) {
-  int y = number * TEXT_HEIGHT;
-  uint8_t mask;
-  int ybyte;
-  display.updateBoundingBox(0, y, SCREEN_WIDTH, y+TEXT_HEIGHT-1);
-  if (!invert) 
-    for (int i=0; i<TEXT_HEIGHT; i++) {
-      mask = ~ ( 1 << ((y+i) % 8) );
-      ybyte = (y+i) / 8 * SCREEN_WIDTH;
-      for (int x=0; x < SCREEN_WIDTH; x++)
-        pcd8544_buffer[ybyte+x] &= mask;
-    }
-   else
-    for (int i=0; i<TEXT_HEIGHT; i++) {
-      mask = 1 << ((y+i) % 8);
-      ybyte = (y+i) / 8 * SCREEN_WIDTH;
-      for (int x=0; x < SCREEN_WIDTH; x++)
-        pcd8544_buffer[ybyte+x] |= mask;
-    }
-    display.updateBoundingBox(0,y,SCREEN_WIDTH-1,y+TEXT_HEIGHT);
-  //display.fillRect(0,number * TEXT_HEIGHT,SCREEN_WIDTH,TEXT_HEIGHT, invert?1:0);
-  draw_6pt(display, s, 0, y+1, invert?0:1);  
 }
 
 void setup() {
