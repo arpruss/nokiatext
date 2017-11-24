@@ -1,6 +1,6 @@
 #include <SPI.h>
 #include <Adafruit_GFX.h>
-#include <Adafruit_PCD8544.h>
+#include <Adafruit_PCD8544.h> // use fork at github.com/arpruss
 
 #define REMAP_SPI1 // MOSI PB5, MISO PB4, SCK PB3, NSS PA8 (!!)
 #define SCREEN_WIDTH 84
