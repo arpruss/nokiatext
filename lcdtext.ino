@@ -17,7 +17,7 @@ static uint8_t* pcd8544_buffer;
 
 template<bool shiftLeft, bool invert>void writePartialLine(char* text, unsigned xStart, unsigned xEnd, unsigned line, unsigned shift) {
   uint8_t* out = pcd8544_buffer+line*SCREEN_WIDTH + xStart;
-  uint8_t* end = out + xEnd;
+  uint8_t* end = out + xEnd-xStart;
   uint8_t mask = shiftLeft ? ((1<<TEXT_HEIGHT)-1)<<shift : ((1<<TEXT_HEIGHT)-1)>>shift;
   if (!invert)
     mask = ~mask;
@@ -94,9 +94,10 @@ void setup() {
   gpio_set_mode(GPIOB, 4, GPIO_INPUT_FLOATING);
   gpio_set_mode(GPIOB, 5, GPIO_AF_OUTPUT_PP);
 #endif
+  mySPI.begin();
   mySPI.setModule(1);
   pcd8544_buffer = display.getPixelBuffer();
-  display.begin(40,5);
+  display.begin(); //40,5
 }
 
 uint32_t t0,t1,t2,t3,t4;
@@ -106,9 +107,9 @@ void loop() {
   display.clearDisplay();
   display.display();
   t1 = micros();
-  writeLine2("joystick (2 sli.), 0.64x rot", 0, rev);
+  writeLine("joystick (2 sli.), 0.64x rot", 0, rev);
   t2 = micros();
-  writeLine2("Jetset Radio joystick", 1,!rev);
+  writeLine("Jetset Radio joystick", 1,!rev);
   t3 = micros();
   display.display();
   t4 = micros();
