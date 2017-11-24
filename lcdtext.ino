@@ -3,6 +3,7 @@
 #include <Adafruit_PCD8544.h> // use fork at github.com/arpruss
 
 #define REMAP_SPI1 // MOSI PB5, MISO PB4, SCK PB3, NSS PA8 (!!)
+// unmapped: MOSI PA7, SCK PA5, MISO PA6, NSS PA4
 #define SCREEN_WIDTH 84
 #define SCREEN_HEIGHT 48
 #define TEXT_HEIGHT 6
@@ -10,10 +11,10 @@
 #include "6pt.h" 
 #include "SPI.h"
 
-//Adafruit_PCD8544 display = Adafruit_PCD8544(PB3, PB5, PB0, /*PB1*/0, PB11);
+//Adafruit_PCD8544 display = Adafruit_PCD8544(PB3, PB5, PB0, /*PB1*/0, /*PB11*/0);
 SPIClass mySPI(1);
 // CS isn't really needed, is it?
-Adafruit_PCD8544 display = Adafruit_PCD8544(PB0, /*PB1*/0, PB11, &mySPI); // warning: MISO=PA6 is input, NSS=PA4 is output
+Adafruit_PCD8544 display = Adafruit_PCD8544(PB0, /*PB1*/0, /*PB11*/0, &mySPI); // warning: MISO is input, NSS is output
 static uint8_t* pcd8544_buffer;
 
 template<bool shiftLeft, bool invert>void writePartialLine(char* text, unsigned xStart, unsigned xEnd, unsigned line, unsigned shift) {
