@@ -14,7 +14,7 @@
 //Adafruit_PCD8544 display = Adafruit_PCD8544(PB3, PB5, PB0, /*PB1*/0, /*PB11*/0);
 SPIClass mySPI(1);
 // CS isn't really needed, is it?
-Adafruit_PCD8544 display = Adafruit_PCD8544(PB0, /*PB1*/0, /*PB11*/0, &mySPI); // warning: MISO is input, NSS is output
+Adafruit_PCD8544 display = Adafruit_PCD8544(PB0, 0/*PB1*/, 0/*PB11*/, &mySPI); // warning: MISO is input, NSS is output
 static uint8_t* pcd8544_buffer;
 
 template<bool shiftLeft, bool invert>void writePartialLine(char* text, unsigned xStart, unsigned xEnd, unsigned line, unsigned shift) {
