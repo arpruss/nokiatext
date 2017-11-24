@@ -10,9 +10,10 @@
 #include "6pt.h" 
 #include "SPI.h"
 
-//Adafruit_PCD8544 display = Adafruit_PCD8544(PB3, PB5, PB0, PB1, PB11);
+//Adafruit_PCD8544 display = Adafruit_PCD8544(PB3, PB5, PB0, /*PB1*/0, PB11);
 SPIClass mySPI(1);
-Adafruit_PCD8544 display = Adafruit_PCD8544(PB0, PB1, PB11, &mySPI); // warning: MISO=PA6 is input, NSS=PA4 is output
+// CS isn't really needed, is it?
+Adafruit_PCD8544 display = Adafruit_PCD8544(PB0, /*PB1*/0, PB11, &mySPI); // warning: MISO=PA6 is input, NSS=PA4 is output
 static uint8_t* pcd8544_buffer;
 
 template<bool shiftLeft, bool invert>void writePartialLine(char* text, unsigned xStart, unsigned xEnd, unsigned line, unsigned shift) {
